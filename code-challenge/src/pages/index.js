@@ -5,8 +5,8 @@ import Head from 'next/head'
 import Post from '../components/post'
 
 export default function Home( { posts, users } ) {
-  console.log(users)
 
+  //maps posts to Post components
   const renderPosts = posts.map((post) => {
     return <Post post={post} user={users.filter(user => user.id === post.userId)}/>
   })
@@ -22,11 +22,14 @@ export default function Home( { posts, users } ) {
   )
 }
 
+//data fetching
 export async function getStaticProps() {
   const posts = await fetch(`https://jsonplaceholder.typicode.com/posts/`)
   const postData = await posts.json()
+
   const users = await fetch(`https://jsonplaceholder.typicode.com/users/`)
   const userData = await users.json()
+  
   return {
     props: {
       posts: postData,
